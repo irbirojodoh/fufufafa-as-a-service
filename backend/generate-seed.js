@@ -46,14 +46,13 @@ function generateSeedSQL() {
     // Generate SQL
     let sql = '-- FUaaS Seed Data\n';
     sql += '-- Generated: ' + new Date().toISOString() + '\n\n';
-    sql += 'BEGIN TRANSACTION;\n\n';
 
     for (const quote of quotes) {
         const hasImage = imageIds.has(quote.id) ? 1 : 0;
         sql += `INSERT INTO quotes (id, quote, source_url, has_image) VALUES (${quote.id}, ${escapeSQL(quote.quote)}, ${escapeSQL(quote.source_url)}, ${hasImage});\n`;
     }
 
-    sql += '\nCOMMIT;\n';
+    sql += '\n';
 
     // Write to file
     fs.writeFileSync(OUTPUT_FILE, sql, 'utf-8');

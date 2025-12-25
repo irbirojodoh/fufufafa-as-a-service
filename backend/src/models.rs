@@ -9,26 +9,19 @@ pub struct Quote {
     pub has_image: bool,
 }
 
-/// API response for quote endpoints
+/// API response for quote endpoints (no image_url - use /api/wisdom/img/:id for images)
 #[derive(Debug, Serialize)]
 pub struct QuoteResponse {
     pub quote: String,
     pub source_url: String,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub image_url: Option<String>,
 }
 
 impl Quote {
     /// Convert Quote to API response format
-    pub fn to_response(&self, base_url: &str) -> QuoteResponse {
+    pub fn to_response(&self) -> QuoteResponse {
         QuoteResponse {
             quote: self.quote.clone(),
             source_url: self.source_url.clone(),
-            image_url: if self.has_image {
-                Some(format!("{}/api/wisdom/img/{}", base_url, self.id))
-            } else {
-                None
-            },
         }
     }
 }

@@ -39,21 +39,17 @@ async fn main(req: Request, env: Env, _ctx: Context) -> Result<Response> {
     
     router
         // GET /api/wisdom/ - Random quote
-        .get_async("/api/wisdom/", |req, ctx| async move {
+        .get_async("/api/wisdom/", |_req, ctx| async move {
             let db = ctx.env.d1("DB")?;
             
             match db::get_random_quote(&db).await? {
-                Some(quote) => {
-                    let url = req.url()?;
-                    let base_url = format!("{}://{}", url.scheme(), url.host_str().unwrap_or("localhost"));
-                    json_response(&quote.to_response(&base_url), 200)
-                }
+                Some(quote) => json_response(&quote.to_response(), 200),
                 None => error_response("No quotes found", 404),
             }
         })
         
         // GET /api/wisdom/:id - Specific quote by ID
-        .get_async("/api/wisdom/:id", |req, ctx| async move {
+        .get_async("/api/wisdom/:id", |_req, ctx| async move {
             let id: i64 = ctx.param("id")
                 .ok_or_else(|| Error::from("Missing ID parameter"))?
                 .parse()
@@ -62,11 +58,7 @@ async fn main(req: Request, env: Env, _ctx: Context) -> Result<Response> {
             let db = ctx.env.d1("DB")?;
             
             match db::get_quote_by_id(&db, id).await? {
-                Some(quote) => {
-                    let url = req.url()?;
-                    let base_url = format!("{}://{}", url.scheme(), url.host_str().unwrap_or("localhost"));
-                    json_response(&quote.to_response(&base_url), 200)
-                }
+                Some(quote) => json_response(&quote.to_response(), 200),
                 None => error_response("Quote not found", 404),
             }
         })
