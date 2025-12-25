@@ -1,0 +1,41 @@
+# FUaaS Project .gitignore
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build artifacts
+target/
+build/
+dist/
+
+# Generated files
+data-extraction/scraped-images/
+backend/seed.sql
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Rust
+*.rs.bk
+Cargo.lock
+
+# Wrangler
+.wrangler/

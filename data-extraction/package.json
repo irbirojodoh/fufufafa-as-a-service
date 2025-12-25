@@ -1,0 +1,13 @@
+{
+  "name": "fuaas-data-extraction",
+  "version": "1.0.0",
+  "description": "Data extraction and image generation for FUaaS",
+  "scripts": {
+    "generate-json": "node generate-json.js",
+    "scrape": "node scrape-posts.js",
+    "scrape-batch": "node scrape-posts.js --batch"
+  },
+  "dependencies": {
+    "puppeteer": "^24.34.0"
+  }
+}
