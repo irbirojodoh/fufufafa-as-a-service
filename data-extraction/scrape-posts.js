@@ -60,7 +60,7 @@ async function screenshotFufufafaPost(page, url, outputPath) {
         // Wait a bit more for images to load
         await new Promise(r => setTimeout(r, 1500));
 
-        // Find fufufafa's post and screenshot it
+        // Find fufufafa's post and clean it up (remove comments)
         const result = await page.evaluate(() => {
             // Find all posts on the page
             const posts = document.querySelectorAll('[class*="w-full md:rounded bg-surface"]');
@@ -71,7 +71,38 @@ async function screenshotFufufafaPost(page, url, outputPath) {
                 const usernameEl = post.querySelector('.htmlContentRenderer_html-content__ePjqJ.font-medium');
 
                 if (usernameEl && usernameEl.textContent.trim().toLowerCase() === 'fufufafa') {
-                    // Found it! Return the bounding rect
+                    // Found it! Now clean up the post by removing comments section
+
+                    // Find the main action bar (with vote buttons, Kutip, Balas)
+                    // It's the first div with class "flex w-full justify-between pb-2 px-4" 
+                    // that contains the fa-arrow-alt-up icon
+                    const actionBars = post.querySelectorAll('div.flex.w-full.justify-between.pb-2.px-4');
+                    let mainActionBar = null;
+
+                    for (const bar of actionBars) {
+                        if (bar.querySelector('.fa-arrow-alt-up') && bar.querySelector('.fa-share-nodes')) {
+                            mainActionBar = bar;
+                            break;
+                        }
+                    }
+
+                    if (mainActionBar) {
+                        // Remove everything after the action bar (comments, "Tutup" section, etc.)
+                        let sibling = mainActionBar.nextElementSibling;
+                        while (sibling) {
+                            const toRemove = sibling;
+                            sibling = sibling.nextElementSibling;
+                            toRemove.remove();
+                        }
+
+                        // Also remove the reputation section (avatars with "xxx dan yyy lainnya memberi reputasi")
+                        const repSection = post.querySelector('div.my-2.flex.cursor-pointer.px-4');
+                        if (repSection) {
+                            repSection.remove();
+                        }
+                    }
+
+                    // Return the bounding rect
                     const rect = post.getBoundingClientRect();
                     return {
                         found: true,
