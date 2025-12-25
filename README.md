@@ -56,3 +56,15 @@ This is a satire/archive project. Quotes are preserved for historical and entert
 ## License
 
 MIT
+
+## Acknowledgment
+The inspiration for this project is derived from the open source work titled “No as a Service”, available at the following public repository:
+
+[![Inspiration](https://img.shields.io/badge/Inspiration-no--as--a--service-green?style=for-the-badge&logo=github)](https://github.com/hotheadhacker/no-as-a-service)
+
+This acknowledgment is provided solely to credit conceptual inspiration and does not imply any affiliation, endorsement, or association with the referenced project or its contributors.
+
+## Legal Notice
+All content made available through this service is derived from publicly accessible sources that are openly available online. This project does not assert ownership, copyright, or exclusive rights over the original materials. The content is reproduced and distributed in good faith for archival, informational, research, and entertainment purposes.
+
+This service is not affiliated with, endorsed by, or sponsored by any individual, entity, or platform associated with the original source of the content. If any rights holder believes that the use of certain material is inappropriate, they are encouraged to raise the matter through the project repository for review and, if necessary, remediation.
