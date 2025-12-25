@@ -39,5 +39,7 @@ Cargo.lock
 
 # Wrangler
 .wrangler/
+backend/wrangler.toml
 
+# Agent documentation (private)
 AGENT.md
