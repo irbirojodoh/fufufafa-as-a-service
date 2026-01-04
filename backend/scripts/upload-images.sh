@@ -6,7 +6,7 @@
 set -e
 
 # Configuration
-IMG_DIR="../fufufafa-memorable-quotes/img"
+IMG_DIR="../data-extraction/scraped-images"
 BUCKET_NAME="fuaas-images"
 
 echo "Uploading images to R2 bucket: $BUCKET_NAME"
@@ -29,7 +29,7 @@ for file in "$IMG_DIR"/*.png; do
         newname="${id}.png"
         
         echo "Uploading: $filename -> $newname"
-        wrangler r2 object put "$BUCKET_NAME/$newname" --file="$file" --content-type="image/png"
+        wrangler r2 object put "$BUCKET_NAME/$newname" --file="$file" --content-type="image/png" --remote
         
         count=$((count + 1))
     fi

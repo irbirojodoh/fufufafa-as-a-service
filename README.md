@@ -47,7 +47,96 @@ curl https://fuaas.irphotoarts.cloud/api/wisdom/img/47 --output quote.png
 
 See [API.md](./API.md) for full documentation.
 
+## Integrations
 
+### Siri Shortcut
+
+Get daily wisdom notifications on your iPhone with our ready-to-use Siri Shortcut:
+
+[![Get Shortcut](https://img.shields.io/badge/Get_Shortcut-Siri-black?style=for-the-badge&logo=apple)](https://www.icloud.com/shortcuts/b62ce426cadc42d8b1f9f11b10cf604d)
+
+<p align="center">
+  <img src="./assets/siri-shortcut.png" alt="Siri Shortcut Example" width="400">
+</p>
+
+## Self-Hosting Guide
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (v18+)
+- [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/install-and-update/) (`npm install -g wrangler`)
+- Cloudflare account with Workers, D1, and R2 access
+
+### 1. Clone the Repository
+
+```bash
+git clone --recurse-submodules https://github.com/your-username/FUaaS.git
+cd FUaaS
+```
+
+### 2. Create Cloudflare Resources
+
+```bash
+# Login to Cloudflare
+wrangler login
+
+# Create D1 database
+wrangler d1 create fuaas-quotes
+
+# Create R2 bucket
+wrangler r2 bucket create fuaas-images
+```
+
+Update `backend/wrangler.toml` with your D1 database ID.
+
+### 3. Prepare Data
+
+```bash
+# Generate quotes JSON from raw data
+cd data-extraction
+npm install
+node generate-json.js
+
+# Generate database seed file
+cd ../backend
+node generate-seed.js
+```
+
+### 4. Seed Database & Upload Images
+
+```bash
+cd backend
+
+# Initialize D1 database
+wrangler d1 execute fuaas-quotes --remote --file=schema.sql
+wrangler d1 execute fuaas-quotes --remote --file=seed.sql
+
+# Upload images to R2
+chmod +x scripts/upload-images.sh
+./scripts/upload-images.sh
+```
+
+### 5. Deploy
+
+```bash
+cd backend
+wrangler deploy
+```
+
+### Local Development
+
+```bash
+cd backend
+
+# Seed local D1 database
+wrangler d1 execute fuaas-quotes --local --file=schema.sql
+wrangler d1 execute fuaas-quotes --local --file=seed.sql
+
+# Start local dev server
+wrangler dev --local
+```
+
+For detailed technical context, see [AGENT.md](./AGENT.md).
 
 
 

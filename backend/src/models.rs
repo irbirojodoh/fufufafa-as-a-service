@@ -12,6 +12,7 @@ pub struct Quote {
 /// API response for quote endpoints (no image_url - use /api/wisdom/img/:id for images)
 #[derive(Debug, Serialize)]
 pub struct QuoteResponse {
+    pub id: i64,
     pub quote: String,
     pub source_url: String,
 }
@@ -20,6 +21,7 @@ impl Quote {
     /// Convert Quote to API response format
     pub fn to_response(&self) -> QuoteResponse {
         QuoteResponse {
+            id: self.id,
             quote: self.quote.clone(),
             source_url: self.source_url.clone(),
         }

@@ -1,6 +1,6 @@
 # FUaaS API Documentation
 
-**Fufufafa Wisdom as a Service** - A satirical API serving memorable quotes from the legendary Kaskus forum user "fufufafa".
+**Fufufafa as a Service** - A satirical API serving memorable quotes from the legendary Kaskus forum user "fufufafa".
 
 ## Base URL
 
@@ -49,7 +49,7 @@ GET /api/wisdom/:id
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `id` | integer | Quote ID (1-1337) |
+| `id` | integer | Quote ID  |
 
 #### Response
 

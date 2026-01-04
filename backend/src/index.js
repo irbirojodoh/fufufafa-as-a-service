@@ -92,6 +92,7 @@ function jsonResponse(data, status, headers) {
 
 function formatQuote(quote) {
     return {
+        id: quote.id,
         quote: quote.quote,
         source_url: quote.source_url,
     };
